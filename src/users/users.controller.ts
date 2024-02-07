@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards, ValidationPipe } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
+import { BeltGuard } from 'src/belt/belt.guard';
 
 @Controller('users')
+@UseGuards(BeltGuard)
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
 
@@ -13,6 +15,7 @@ export class UsersController {
     }
 
     @Post()
+    @UseGuards(BeltGuard)
     createUser(@Body(new ValidationPipe()) createUserDto: CreateUserDto) {
         return this.usersService.createUser(createUserDto);
     }
