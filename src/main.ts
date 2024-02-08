@@ -1,15 +1,18 @@
-import { NestFactory } from '@nestjs/core';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { MyLoggerService } from './my-logger/my-logger.service';
+import { AllExceptionsFilter } from './all-exceptions.filter';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { join } from 'path';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
-    bufferLogs: !0
-  });
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const { httpAdapter } = app.get(HttpAdapterHost);
 
-  app.useLogger(app.get(MyLoggerService));
+  app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
   app.enableCors();
-  app.setGlobalPrefix('api');
+  app.useStaticAssets(join(__dirname, '..', 'public'));
+  app.setBaseViewsDir(join(__dirname, '..', 'views'));
+  app.setViewEngine('ejs');
 
   await app.listen(3000);
 }

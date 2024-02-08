@@ -5,7 +5,7 @@ import { SkipThrottle, Throttle } from '@nestjs/throttler';
 import { MyLoggerService } from 'src/my-logger/my-logger.service';
 
 @SkipThrottle()
-@Controller('students')
+@Controller('json-students')
 export class StudentsController {
   constructor(private readonly studentsService: StudentsService) { }
 

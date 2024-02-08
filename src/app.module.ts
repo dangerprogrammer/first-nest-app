@@ -1,12 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { DatabaseModule } from './database/database.module';
 import { StudentsModule } from './students/students.module';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { MyLoggerModule } from './my-logger/my-logger.module';
+import { ViewModule } from './view/view.module';
 
 @Module({
   imports: [
@@ -22,10 +21,10 @@ import { MyLoggerModule } from './my-logger/my-logger.module';
       ttl: 60e3,
       limit: 100
     }]),
-    MyLoggerModule
+    MyLoggerModule,
+    ViewModule
   ],
-  controllers: [AppController],
-  providers: [AppService, {
+  providers: [{
     provide: APP_GUARD,
     useClass: ThrottlerGuard
   }],
