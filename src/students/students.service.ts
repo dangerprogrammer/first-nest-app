@@ -17,7 +17,7 @@ export class StudentsService {
   }
 
   async findOne(id: number) {
-    return this.databaseService.students.findUnique({
+    return await this.databaseService.students.findUnique({
       where: { id }
     });
   }

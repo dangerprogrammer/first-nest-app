@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <% if (user) { %>
+        <h1>Hello, <%= user.name %></h1>
+        <h2>ID: <%= user.id %></h2>
+        <h3>Created At: <%= user.createdAt %></h3>
+        <h3>Updated At: <%= user.updatedAt %></h3>
+    <% } %>
+</body>
+</html>
